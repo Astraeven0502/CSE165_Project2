@@ -968,8 +968,10 @@ MonoBehaviour:
   stopwatchText: {fileID: 1490504501}
   pointsText: {fileID: 42127616}
   checkpointSound: {fileID: 8300000, guid: 3d717e243255096429810ca6a50bb7c5, type: 3}
+  checkpointMusic: {fileID: 8300000, guid: 033766cc31c97904bae4404b8a079544, type: 3}
   audioSource: {fileID: 1907695463}
   freezeDuration: 3
+  handSkeleton: {fileID: 1840451493}
 --- !u!114 &463403124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1287,8 +1289,10 @@ MonoBehaviour:
   stopwatchText: {fileID: 1124982942}
   pointsText: {fileID: 1521420508}
   checkpointSound: {fileID: 8300000, guid: 3d717e243255096429810ca6a50bb7c5, type: 3}
+  checkpointMusic: {fileID: 0}
   audioSource: {fileID: 1907695463}
   freezeDuration: 3
+  handSkeleton: {fileID: 0}
 --- !u!114 &614568086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1319,9 +1323,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a8d63ac0b1d0694b810ab438978d12b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 100
+  maxSpeed: 150
   moveSpeed: 15
-  smoothing: 5
+  smoothing: 10
   maxGestureDistance: 0.06
 --- !u!1 &699558689
 GameObject:
@@ -3326,7 +3330,7 @@ GameObject:
   - component: {fileID: 1562136308}
   - component: {fileID: 1562136307}
   m_Layer: 0
-  m_Name: test
+  m_Name: HandDirectionMover_test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3880,6 +3884,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4453513310108136, guid: 835e735ca71bf78459fb2cababd74112, type: 3}
   m_PrefabInstance: {fileID: 428842846}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1840451493 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114567484643301796, guid: 835e735ca71bf78459fb2cababd74112, type: 3}
+  m_PrefabInstance: {fileID: 428842846}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2609c54f376cffc4da1ab9401cc1a36f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1881414118
 GameObject:
   m_ObjectHideFlags: 0
@@ -3940,7 +3955,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.75
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -3959,10 +3974,37 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
+      time: 0.0026378632
+      value: 0.9999943
       inSlope: 0
       outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.11552006
+      value: 0.5822851
+      inSlope: -4.5934825
+      outSlope: -4.5934825
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.47252902
+    - serializedVersion: 3
+      time: 0.21724573
+      value: 0.22648847
+      inSlope: -2.1444046
+      outSlope: -2.1444046
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.27079117
+    - serializedVersion: 3
+      time: 0.4867956
+      value: 0.004909128
+      inSlope: -0.11066651
+      outSlope: -0.11066651
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
@@ -4074,7 +4116,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 22.343292, y: 30.2}
-  m_SizeDelta: {x: 480, y: 100}
+  m_SizeDelta: {x: 480, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1970497403
 MonoBehaviour:
@@ -4103,7 +4145,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 80
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -4263,7 +4305,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 22.343292, y: 30.2}
-  m_SizeDelta: {x: 480, y: 100}
+  m_SizeDelta: {x: 480, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2108584865
 MonoBehaviour:
@@ -4292,7 +4334,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 80
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0

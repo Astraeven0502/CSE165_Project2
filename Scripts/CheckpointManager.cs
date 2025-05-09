@@ -1,179 +1,7 @@
-//////using System.Collections;
-//////using System.Collections.Generic;
-//////using UnityEngine;
-
-//////public class CheckpointManager : MonoBehaviour
-//////{
-//////    // Start is called before the first frame update
-//////    void Start()
-//////    {
-
-//////    }
-
-//////    // Update is called once per frame
-//////    void Update()
-//////    {
-
-//////    }
-//////}
-//////---------------------------
-//////using UnityEngine;
-//////using System.Collections.Generic;
-
-//////public class CheckpointManager : MonoBehaviour
-//////{
-//////    public Parse parser;
-//////    public GameObject checkpointPrefab;
-//////    public OVRCameraRig cam;
-//////    private List<Vector3> checkpointPositions;
-
-//////    private List<GameObject> checkpoints = new List<GameObject>();
-//////    private const float triggerDistance = 9.144f; // 30 feet in meters
-
-//////    void Start()
-//////    {
-//////        checkpointPositions = parser.ParseFile();
-//////        foreach (Vector3 pos in checkpointPositions)
-//////        {
-//////            GameObject checkpoint = Instantiate(checkpointPrefab, pos, Quaternion.identity);
-//////            checkpoints.Add(checkpoint);
-//////        }
-
-//////        cam.transform.position = checkpointPositions[0];
-//////    }
-
-//////    void Update()
-//////    {
-//////        Vector3 camPos = cam.centerEyeAnchor.position;
-
-//////        for (int i = checkpoints.Count - 1; i >= 0; i--)
-//////        {
-//////            if (checkpoints[i] == null) continue;
-
-//////            float distance = Vector3.Distance(camPos, checkpoints[i].transform.position);
-//////            if (distance < triggerDistance && )
-//////            {
-//////                Destroy(checkpoints[i]);
-//////                checkpoints.RemoveAt(i);
-//////            }
-//////        }
-//////    }
-//////}
-//////----------------------------
-
-//////using UnityEngine;
-//////using System.Collections.Generic;
-
-//////public class CheckpointManager : MonoBehaviour
-//////{
-//////    public Parse parser;
-//////    public GameObject checkpointPrefab;
-//////    public OVRCameraRig cam;
-
-//////    private List<GameObject> checkpoints = new List<GameObject>();
-//////    private const float triggerDistance = 9.144f; // 30 feet
-//////    private int currentCheckpointIndex = 0;
-
-//////    void Start()
-//////    {
-//////        List<Vector3> checkpointPositions = parser.ParseFile();
-
-//////        foreach (Vector3 pos in checkpointPositions)
-//////        {
-//////            GameObject checkpoint = Instantiate(checkpointPrefab, pos, Quaternion.identity);
-//////            checkpoints.Add(checkpoint);
-//////        }
-
-//////        cam.transform.position = checkpointPositions[0]; // Optional initial placement
-//////    }
-
-//////    void Update()
-//////    {
-//////        if (currentCheckpointIndex >= checkpoints.Count) return;
-
-//////        GameObject currentCheckpoint = checkpoints[currentCheckpointIndex];
-//////        if (currentCheckpoint == null) return;
-
-//////        Vector3 camPos = cam.centerEyeAnchor.position;
-//////        float distance = Vector3.Distance(camPos, currentCheckpoint.transform.position);
-
-//////        if (distance < triggerDistance)
-//////        {
-//////            Destroy(currentCheckpoint);
-//////            currentCheckpointIndex++;
-//////        }
-//////    }
-//////}
-//////-----------------------------
-//////using UnityEngine;
-//////using System.Collections.Generic;
-
-//////public class CheckpointManager : MonoBehaviour
-//////{
-//////    public Parse parser;
-//////    public GameObject checkpointPrefab;
-//////    public OVRCameraRig cam;
-
-//////    private List<GameObject> checkpoints = new List<GameObject>();
-//////    private const float triggerDistance = 9.144f; // 30 feet
-//////    private int currentCheckpointIndex = 0;
-
-//////    private LineRenderer guideLine;
-
-//////    void Start()
-//////    {
-//////        List<Vector3> checkpointPositions = parser.ParseFile();
-
-//////        foreach (Vector3 pos in checkpointPositions)
-//////        {
-//////            GameObject checkpoint = Instantiate(checkpointPrefab, pos, Quaternion.identity);
-//////            checkpoints.Add(checkpoint);
-//////        }
-
-//////        cam.transform.position = checkpointPositions[0];
-
-//////        // Create a guiding line
-//////        guideLine = cam.gameObject.AddComponent<LineRenderer>();
-//////        guideLine.material = new Material(Shader.Find("Sprites/Default"));
-//////        guideLine.startColor = Color.blue;
-//////        guideLine.endColor = Color.blue;
-//////        guideLine.startWidth = 0.02f;
-//////        guideLine.endWidth = 0.02f;
-//////        guideLine.positionCount = 2;
-//////    }
-
-//////    void Update()
-//////    {
-//////        if (currentCheckpointIndex >= checkpoints.Count)
-//////        {
-//////            guideLine.enabled = false;
-//////            return;
-//////        }
-
-//////        GameObject currentCheckpoint = checkpoints[currentCheckpointIndex];
-//////        if (currentCheckpoint == null) return;
-
-//////        Vector3 camPos = cam.centerEyeAnchor.position;
-//////        Vector3 camPos_offset = new Vector3(0f, -0.3f, 0f);
-//////        float distance = Vector3.Distance(camPos, currentCheckpoint.transform.position);
-
-//////        if (distance < triggerDistance)
-//////        {
-//////            Destroy(currentCheckpoint);
-//////            currentCheckpointIndex++;
-//////            return;
-//////        }
-
-//////        // Update the guiding line
-//////        guideLine.SetPosition(0, camPos + camPos_offset);
-//////        guideLine.SetPosition(1, currentCheckpoint.transform.position);
-//////    }
-//////}
-//////---------------------
-
 ////using UnityEngine;
-////using UnityEngine.UI; 
+////using UnityEngine.UI;
 ////using System.Collections.Generic;
+////using UnityEngine.XR.Hands;
 
 ////public class CheckpointManager : MonoBehaviour
 ////{
@@ -182,7 +10,7 @@
 ////    public OVRCameraRig cam;
 
 ////    private List<GameObject> checkpoints = new List<GameObject>();
-////    private const float triggerDistance = 9.144f; // 30 feet
+////    private const float triggerDistance = 9.144f;
 ////    private int currentCheckpointIndex = 0;
 
 ////    private LineRenderer guideLine;
@@ -192,17 +20,23 @@
 ////    public Text pointsText;
 
 ////    private int points = 0;
-
-////    public float countdownDuration = 3f; // seconds
 ////    private float countdownRemaining;
 ////    private float stopwatchTime = 0f;
 
 ////    private bool countdownFinished = false;
 
-////    private HandDirectionMover movementScript; // Replace with your actual script name
+////    private HandDirectionMover movementScript;
 
 ////    public AudioClip checkpointSound;
-////    private AudioSource audioSource;
+////    public AudioSource audioSource;
+
+////    // Freeze-related
+////    private Vector3 lastCheckpointPosition;
+////    private bool isFrozen = false;
+////    private float freezeTimer = 0f;
+////    public float freezeDuration = 3f;
+
+////    public OVRSkeleton handSkeleton;
 
 ////    void Start()
 ////    {
@@ -214,9 +48,12 @@
 ////            checkpoints.Add(checkpoint);
 ////        }
 
-////        cam.transform.position = checkpointPositions[0];
+////        if (checkpointPositions.Count > 0)
+////        {
+////            cam.transform.position = checkpointPositions[0];
+////            lastCheckpointPosition = checkpointPositions[0];
+////        }
 
-////        // Create a guiding line
 ////        guideLine = cam.gameObject.AddComponent<LineRenderer>();
 ////        guideLine.material = new Material(Shader.Find("Sprites/Default"));
 ////        guideLine.startColor = Color.blue;
@@ -225,17 +62,13 @@
 ////        guideLine.endWidth = 0.02f;
 ////        guideLine.positionCount = 2;
 
-////        countdownRemaining = countdownDuration;
+////        countdownRemaining = 3f;
 ////        countdownText.gameObject.SetActive(true);
 ////        stopwatchText.gameObject.SetActive(false);
 
 ////        movementScript = cam.GetComponentInChildren<HandDirectionMover>();
 ////        if (movementScript != null)
-////        {
-////            movementScript.enabled = false; // Disable movement during countdown
-////        }
-
-////        audioSource = GetComponent<AudioSource>();
+////            movementScript.enabled = false;
 ////    }
 
 ////    void Update()
@@ -252,12 +85,13 @@
 ////                stopwatchText.gameObject.SetActive(true);
 
 ////                if (movementScript != null)
-////                {
-////                    movementScript.enabled = true; // Enable movement after countdown
-////                }
+////                    movementScript.enabled = true;
 ////            }
-////            return; // Don't proceed until countdown finishes
+////            return;
 ////        }
+
+////        GameObject currentCheckpoint = checkpoints[currentCheckpointIndex];
+////        if (currentCheckpoint == null) return;
 
 ////        if (currentCheckpointIndex >= checkpoints.Count)
 ////        {
@@ -265,40 +99,65 @@
 ////            return;
 ////        }
 
-////        //---------------Check point-------------------
-////        GameObject currentCheckpoint = checkpoints[currentCheckpointIndex];
-////        if (currentCheckpoint == null) return;
-
 ////        Vector3 camPos = cam.centerEyeAnchor.position;
 ////        Vector3 camPos_offset = new Vector3(0f, -0.3f, 0f);
 ////        float distance = Vector3.Distance(camPos, currentCheckpoint.transform.position);
 
 ////        if (distance < triggerDistance)
 ////        {
+////            lastCheckpointPosition = currentCheckpoint.transform.position;
 ////            Destroy(currentCheckpoint);
 ////            currentCheckpointIndex++;
 
 ////            points++;
 ////            pointsText.text = points + "/" + checkpoints.Count + " CheckPoints";
 
-////            // Play sound
 ////            if (checkpointSound != null && audioSource != null)
-////            {
 ////                audioSource.PlayOneShot(checkpointSound);
-////            }
 
 ////            return;
 ////        }
-////        //---------------Check point-----------------
 
-////        //--------------------Stopwatch--------------------
 ////        stopwatchTime += Time.deltaTime;
 ////        stopwatchText.text = FormatTime(stopwatchTime);
-////        //--------------------Stopwatch--------------------
 
-////        // Update the guiding line
+////        if (isFrozen)
+////        {
+////            freezeTimer -= Time.deltaTime;
+////            if (freezeTimer <= 0f)
+////            {
+////                isFrozen = false;
+////                if (movementScript != null)
+////                    movementScript.enabled = true;
+////            }
+////            return;
+////        }
+
 ////        guideLine.SetPosition(0, camPos + camPos_offset);
 ////        guideLine.SetPosition(1, currentCheckpoint.transform.position);
+
+////        if (handSkeleton.Bones != null && handSkeleton.Bones.Count > 0)
+////        {
+////            // Index finger tip bone
+////            var indexTipBone = handSkeleton.Bones[(int)OVRSkeleton.BoneId.Hand_IndexTip];
+////            Vector3 tipWorldPosition = indexTipBone.Transform.position;
+////            Debug.Log("Index Finger Tip Position: " + tipWorldPosition);
+////            guideLine.SetPosition(0, tipWorldPosition);
+////        }
+
+////    }
+
+////    public void OnGroundTouched()
+////    {
+////        if (countdownFinished && !isFrozen)
+////        {
+////            cam.transform.position = lastCheckpointPosition;
+////            isFrozen = true;
+////            freezeTimer = freezeDuration;
+
+////            if (movementScript != null)
+////                movementScript.enabled = false;
+////        }
 ////    }
 
 ////    private string FormatTime(float time)
@@ -310,10 +169,10 @@
 ////    }
 ////}
 
-
 //using UnityEngine;
 //using UnityEngine.UI;
 //using System.Collections.Generic;
+//using UnityEngine.XR.Hands;
 
 //public class CheckpointManager : MonoBehaviour
 //{
@@ -322,7 +181,7 @@
 //    public OVRCameraRig cam;
 
 //    private List<GameObject> checkpoints = new List<GameObject>();
-//    private const float triggerDistance = 9.144f; // 30 feet
+//    private const float triggerDistance = 9.144f;
 //    private int currentCheckpointIndex = 0;
 
 //    private LineRenderer guideLine;
@@ -332,8 +191,6 @@
 //    public Text pointsText;
 
 //    private int points = 0;
-
-//    public float countdownDuration = 3f; // seconds
 //    private float countdownRemaining;
 //    private float stopwatchTime = 0f;
 
@@ -344,11 +201,13 @@
 //    public AudioClip checkpointSound;
 //    public AudioSource audioSource;
 
-//    // Freeze logic
+//    // Freeze-related
 //    private Vector3 lastCheckpointPosition;
 //    private bool isFrozen = false;
 //    private float freezeTimer = 0f;
 //    public float freezeDuration = 3f;
+
+//    public OVRSkeleton handSkeleton;
 
 //    void Start()
 //    {
@@ -374,20 +233,17 @@
 //        guideLine.endWidth = 0.02f;
 //        guideLine.positionCount = 2;
 
-//        countdownRemaining = countdownDuration;
+//        countdownRemaining = 3f;
 //        countdownText.gameObject.SetActive(true);
 //        stopwatchText.gameObject.SetActive(false);
 
 //        movementScript = cam.GetComponentInChildren<HandDirectionMover>();
 //        if (movementScript != null)
-//        {
 //            movementScript.enabled = false;
-//        }
 //    }
 
 //    void Update()
 //    {
-//        // Countdown before game starts
 //        if (!countdownFinished)
 //        {
 //            countdownRemaining -= Time.deltaTime;
@@ -405,38 +261,22 @@
 //            return;
 //        }
 
-//        // Freeze logic
-//        if (isFrozen)
-//        {
-//            freezeTimer -= Time.deltaTime;
-//            if (freezeTimer <= 0f)
-//            {
-//                isFrozen = false;
-//                if (movementScript != null)
-//                    movementScript.enabled = true;
-//            }
-//            return; // Skip the rest while frozen
-//        }
+//        GameObject currentCheckpoint = checkpoints[currentCheckpointIndex];
+//        if (currentCheckpoint == null) return;
 
-//        // All checkpoints done
 //        if (currentCheckpointIndex >= checkpoints.Count)
 //        {
 //            guideLine.enabled = false;
 //            return;
 //        }
 
-//        GameObject currentCheckpoint = checkpoints[currentCheckpointIndex];
-//        if (currentCheckpoint == null) return;
-
 //        Vector3 camPos = cam.centerEyeAnchor.position;
 //        Vector3 camPos_offset = new Vector3(0f, -0.3f, 0f);
 //        float distance = Vector3.Distance(camPos, currentCheckpoint.transform.position);
 
-//        // Checkpoint reached
 //        if (distance < triggerDistance)
 //        {
 //            lastCheckpointPosition = currentCheckpoint.transform.position;
-
 //            Destroy(currentCheckpoint);
 //            currentCheckpointIndex++;
 
@@ -449,26 +289,49 @@
 //            return;
 //        }
 
-//        // Stopwatch update
 //        stopwatchTime += Time.deltaTime;
 //        stopwatchText.text = FormatTime(stopwatchTime);
 
-//        // Guiding line
-//        guideLine.SetPosition(0, camPos + camPos_offset);
-//        guideLine.SetPosition(1, currentCheckpoint.transform.position);
-//    }
-
-//    void OnTriggerEnter(Collider other)
-//    {
-//        if (other.CompareTag("Ground") && countdownFinished && !isFrozen)
+//        if (isFrozen)
 //        {
 //            cam.transform.position = lastCheckpointPosition;
+//            freezeTimer -= Time.deltaTime;
+//            countdownText.text = "Crash!!!\n" + "Stabilizing: " + Mathf.Ceil(freezeTimer).ToString();
+//            if (freezeTimer <= 0f)
+//            {
+//                isFrozen = false;
+//                if (movementScript != null)
+//                    movementScript.enabled = true;
+//                countdownText.gameObject.SetActive(false);
+//            }
+//        }
 
+//        guideLine.SetPosition(0, camPos + camPos_offset);
+//        guideLine.SetPosition(1, currentCheckpoint.transform.position);
+
+//        if (handSkeleton.Bones != null && handSkeleton.Bones.Count > 0)
+//        {
+//            // Index finger tip bone
+//            var indexTipBone = handSkeleton.Bones[(int)OVRSkeleton.BoneId.Hand_IndexTip];
+//            Vector3 tipWorldPosition = indexTipBone.Transform.position;
+//            Debug.Log("Index Finger Tip Position: " + tipWorldPosition);
+//            guideLine.SetPosition(0, tipWorldPosition);
+//        }
+
+//    }
+
+//    public void OnGroundTouched()
+//    {
+//        if (countdownFinished && !isFrozen)
+//        {
 //            isFrozen = true;
 //            freezeTimer = freezeDuration;
 
 //            if (movementScript != null)
 //                movementScript.enabled = false;
+
+//            countdownText.gameObject.SetActive(true);
+
 //        }
 //    }
 
@@ -481,10 +344,10 @@
 //    }
 //}
 
-
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.XR.Hands;
 
 public class CheckpointManager : MonoBehaviour
 {
@@ -511,6 +374,7 @@ public class CheckpointManager : MonoBehaviour
     private HandDirectionMover movementScript;
 
     public AudioClip checkpointSound;
+    public AudioClip checkpointMusic;
     public AudioSource audioSource;
 
     // Freeze-related
@@ -519,6 +383,8 @@ public class CheckpointManager : MonoBehaviour
     private float freezeTimer = 0f;
     public float freezeDuration = 3f;
 
+    public OVRSkeleton handSkeleton;
+
     void Start()
     {
         List<Vector3> checkpointPositions = parser.ParseFile();
@@ -526,6 +392,17 @@ public class CheckpointManager : MonoBehaviour
         foreach (Vector3 pos in checkpointPositions)
         {
             GameObject checkpoint = Instantiate(checkpointPrefab, pos, Quaternion.identity);
+
+            AudioSource cpAudio = checkpoint.AddComponent<AudioSource>();
+            cpAudio.clip = checkpointMusic;
+            cpAudio.spatialBlend = 1.0f; // Fully 3D sound
+            cpAudio.loop = true;
+            cpAudio.playOnAwake = false;
+            cpAudio.minDistance = 1f;
+            cpAudio.maxDistance = 200f;
+            cpAudio.rolloffMode = AudioRolloffMode.Linear;
+            cpAudio.dopplerLevel = 0f; 
+
             checkpoints.Add(checkpoint);
         }
 
@@ -572,6 +449,14 @@ public class CheckpointManager : MonoBehaviour
         }
 
         GameObject currentCheckpoint = checkpoints[currentCheckpointIndex];
+
+        AudioSource cpAudio = currentCheckpoint.GetComponent<AudioSource>();
+
+        if (!cpAudio.isPlaying)
+        {
+            cpAudio.Play();
+        }
+
         if (currentCheckpoint == null) return;
 
         if (currentCheckpointIndex >= checkpoints.Count)
@@ -587,6 +472,10 @@ public class CheckpointManager : MonoBehaviour
         if (distance < triggerDistance)
         {
             lastCheckpointPosition = currentCheckpoint.transform.position;
+
+            if (cpAudio != null)
+                cpAudio.Stop();
+
             Destroy(currentCheckpoint);
             currentCheckpointIndex++;
 
@@ -604,30 +493,44 @@ public class CheckpointManager : MonoBehaviour
 
         if (isFrozen)
         {
+            cam.transform.position = lastCheckpointPosition;
             freezeTimer -= Time.deltaTime;
+            countdownText.text = "Crash!!!\n" + "Stabilizing: " + Mathf.Ceil(freezeTimer).ToString();
             if (freezeTimer <= 0f)
             {
                 isFrozen = false;
                 if (movementScript != null)
                     movementScript.enabled = true;
+                countdownText.gameObject.SetActive(false);
             }
-            return;
         }
 
         guideLine.SetPosition(0, camPos + camPos_offset);
         guideLine.SetPosition(1, currentCheckpoint.transform.position);
+
+        if (handSkeleton.Bones != null && handSkeleton.Bones.Count > 0)
+        {
+            // Index finger tip bone
+            var indexTipBone = handSkeleton.Bones[(int)OVRSkeleton.BoneId.Hand_IndexTip];
+            Vector3 tipWorldPosition = indexTipBone.Transform.position;
+            Debug.Log("Index Finger Tip Position: " + tipWorldPosition);
+            guideLine.SetPosition(0, tipWorldPosition);
+        }
+
     }
 
     public void OnGroundTouched()
     {
         if (countdownFinished && !isFrozen)
         {
-            cam.transform.position = lastCheckpointPosition;
             isFrozen = true;
             freezeTimer = freezeDuration;
 
             if (movementScript != null)
                 movementScript.enabled = false;
+
+            countdownText.gameObject.SetActive(true);
+
         }
     }
 
