@@ -1,39 +1,3 @@
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-
-//public class CockpitView : MonoBehaviour
-//{
-
-//    public Transform cameraTransform;      // Drag in OVRCameraRig/CenterEyeAnchor
-//    public Transform aircraftModelTransform; // Drag in your aircraft model
-//    public Vector3 offset;
-//    public float x_rotate_limit;
-
-//    // Start is called before the first frame update
-//    void Start()
-//    {
-
-//    }
-
-//    // Update is called once per frame
-//    void Update()
-//    {
-//        if (cameraTransform != null && aircraftModelTransform != null)
-//        {
-//            float x_rotate;
-//            x_rotate = cameraTransform.rotation.x;
-//            if (x_rotate > x_rotate_limit || -x_rotate > x_rotate_limit)
-//            {
-//                x_rotate = x_rotate_limit;
-//            }
-
-//            aircraftModelTransform.rotation = (x_rotate, cameraTransform.rotation.y, cameraTransform.rotation.z, 0);
-//            aircraftModelTransform.position = cameraTransform.position + offset;
-//        }
-//    }
-//}
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
