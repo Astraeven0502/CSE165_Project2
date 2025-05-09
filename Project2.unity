@@ -968,7 +968,7 @@ MonoBehaviour:
   stopwatchText: {fileID: 1490504501}
   pointsText: {fileID: 42127616}
   checkpointSound: {fileID: 8300000, guid: 3d717e243255096429810ca6a50bb7c5, type: 3}
-  checkpointMusic: {fileID: 8300000, guid: 033766cc31c97904bae4404b8a079544, type: 3}
+  checkpointMusic: {fileID: 8300000, guid: 913a9a8cef66b9f46b7846a72582c1de, type: 3}
   audioSource: {fileID: 1907695463}
   freezeDuration: 3
   handSkeleton: {fileID: 1840451493}
@@ -1289,7 +1289,7 @@ MonoBehaviour:
   stopwatchText: {fileID: 1124982942}
   pointsText: {fileID: 1521420508}
   checkpointSound: {fileID: 8300000, guid: 3d717e243255096429810ca6a50bb7c5, type: 3}
-  checkpointMusic: {fileID: 0}
+  checkpointMusic: {fileID: 8300000, guid: 913a9a8cef66b9f46b7846a72582c1de, type: 3}
   audioSource: {fileID: 1907695463}
   freezeDuration: 3
   handSkeleton: {fileID: 0}
